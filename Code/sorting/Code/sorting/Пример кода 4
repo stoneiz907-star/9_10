@@ -1,0 +1,45 @@
+Code/searching/jump_search.py
+
+
+import math
+
+def jump_search(arr, x):
+    """
+    Поиск скачками в отсортированном массиве
+    """
+    n = len(arr)
+    
+    # Определяем размер прыжка
+    step = int(math.sqrt(n))
+    
+    # Находим блок, где может находиться элемент
+    prev = 0
+    while arr[min(step, n) - 1] < x:
+        prev = step
+        step += int(math.sqrt(n))
+        if prev >= n:
+            return -1
+    
+    # Линейный поиск в найденном блоке
+    while arr[prev] < x:
+        prev += 1
+        if prev == min(step, n):
+            return -1
+    
+    # Если элемент найден
+    if arr[prev] == x:
+        return prev
+    
+    return -1
+
+# Пример использования
+if __name__ == "__main__":
+    arr = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144]
+    x = 55
+    print(f"Массив: {arr}")
+    print(f"Поиск элемента {x}")
+    result = jump_search(arr, x)
+    if result != -1:
+        print(f"Элемент найден на позиции {result}")
+    else:
+        print("Элемент не найден")
