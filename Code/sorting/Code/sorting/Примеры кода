@@ -1,0 +1,37 @@
+Code/sorting/bucket_sort.py
+
+
+def bucket_sort(arr):
+    """
+    Блочная (корзинная) сортировка
+    """
+    if len(arr) == 0:
+        return arr
+    
+    # Определяем количество корзин
+    num_buckets = len(arr)
+    buckets = [[] for _ in range(num_buckets)]
+    
+    # Распределяем элементы по корзинам
+    max_val = max(arr)
+    for num in arr:
+        index = min(int(num * num_buckets / (max_val + 1)), num_buckets - 1)
+        buckets[index].append(num)
+    
+    # Сортируем каждую корзину
+    for i in range(num_buckets):
+        buckets[i].sort()
+    
+    # Объединяем корзины
+    result = []
+    for bucket in buckets:
+        result.extend(bucket)
+    
+    return result
+
+# Пример использования
+if __name__ == "__main__":
+    arr = [0.42, 0.32, 0.33, 0.52, 0.37, 0.47, 0.51]
+    print("Исходный массив:", arr)
+    sorted_arr = bucket_sort(arr)
+    print("Отсортированный массив:", sorted_arr)
